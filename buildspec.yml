@@ -3,6 +3,7 @@ version: 0.2
 environment_variables:
   plaintext:
     S3_BUCKET: "jerrysmasks.com"
+    CLOUDFRONT_DISTRIBUTION_ID: "E7C381K3UGYB0"
 
 phases:
   install:
@@ -21,4 +22,5 @@ phases:
       - npm run build
   post_build:
     commands:
-      - aws s3 cp $CODEBUILD_SRC_DIR/public/ s3://$S3_BUCKET/ --acl public-read --recursive --cache-control 'max-age=300'
+      - aws s3 cp $CODEBUILD_SRC_DIR/public/ s3://$S3_BUCKET/ --acl public-read --recursive --cache-control 'max-age=31104000'
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*" 

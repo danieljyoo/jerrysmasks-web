@@ -1,0 +1,24 @@
+version: 0.2
+
+environment_variables:
+  plaintext:
+    S3_BUCKET: "jerrysmasks.com"
+
+phases:
+  install:
+    commands:
+      - echo `npm -v`
+      - echo NODE_ENV=$NODE_ENV
+      - npm install 
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase...
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Build CODEBUILD_SOURCE_VERSION $CODEBUILD_SOURCE_VERSION
+      - echo Build CODEBUILD_SRC_DIR $CODEBUILD_SRC_DIR
+      - npm run build
+  post_build:
+    commands:
+      - aws s3 cp $CODEBUILD_SRC_DIR/public/ s3://$S3_BUCKET/ --acl public-read --recursive --cache-control 'max-age=300'

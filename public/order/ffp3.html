@@ -9,6 +9,7 @@
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.0.1/dist/alpine.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/env.js"></script>
   </head>
   <body>
     <!-- HERO -->
@@ -351,9 +352,7 @@
   <!-- FOOTER END -->
 
   <script type="text/javascript">
-  
-  var stripe = Stripe('pk_test_QKog4O5lASoP6LVaat1w6cZs');
-  var URL = 'https://q6ddeeip4j.execute-api.us-west-2.amazonaws.com/dev/stripe/checkout';
+  var stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 
   function verifyOrderForm() {
 
@@ -361,7 +360,7 @@
 
   function submitOrder(form) {
     console.log(form);
-    axios.post(URL, form)
+    axios.post(BASE_URL + '/stripe/checkout', form)
     .then((response) => {
       // https://stripe.com/docs/payments/checkout/one-time
       console.log(response.data)

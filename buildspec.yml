@@ -4,7 +4,7 @@ environment_variables:
   plaintext:
     S3_BUCKET: "jerrysmasks.com"
     CLOUDFRONT_DISTRIBUTION_ID: "E7C381K3UGYB0"
-    ENV: "prod"
+    FRONTEND_ENV: "prod"
 
 phases:
   install:
@@ -21,7 +21,7 @@ phases:
       - echo Build CODEBUILD_SOURCE_VERSION $CODEBUILD_SOURCE_VERSION
       - echo Build CODEBUILD_SRC_DIR $CODEBUILD_SRC_DIR
       - npm run build
-      - cp $CODEBUILD_SRC_DIR/env/js/env.$ENV.js $CODEBUILD_SRC_DIR/public/js/env.js
+      - cp $CODEBUILD_SRC_DIR/env/js/env.$FRONTEND_ENV.js $CODEBUILD_SRC_DIR/public/js/env.js
   post_build:
     commands:
       - aws s3 cp $CODEBUILD_SRC_DIR/public/ s3://$S3_BUCKET/ --acl public-read --recursive --cache-control 'max-age=31104000'

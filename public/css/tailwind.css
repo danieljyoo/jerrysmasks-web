@@ -832,6 +832,10 @@ img {
   max-width: 42rem;
 }
 
+.max-w-screen-sm {
+  max-width: 640px;
+}
+
 .max-w-screen-lg {
   max-width: 1024px;
 }

@@ -81,6 +81,10 @@ a {
  * Add the correct font size in all browsers.
  */
 
+small {
+  font-size: 80%;
+}
+
 /**
  * Prevent `sub` and `sup` elements from affecting the line height in
  * all browsers.
@@ -566,6 +570,10 @@ img {
   background-color: #f9fafb;
 }
 
+.bg-gray-100 {
+  background-color: #f4f5f7;
+}
+
 .bg-gray-800 {
   background-color: #252f3f;
 }
@@ -694,8 +702,8 @@ img {
   justify-content: space-between;
 }
 
-.flex-1 {
-  flex: 1 1 0%;
+.font-normal {
+  font-weight: 400;
 }
 
 .font-medium {
@@ -722,6 +730,10 @@ img {
   height: 3rem;
 }
 
+.h-32 {
+  height: 8rem;
+}
+
 .h-72 {
   height: 18rem;
 }
@@ -736,6 +748,10 @@ img {
 
 .leading-6 {
   line-height: 1.5rem;
+}
+
+.leading-8 {
+  line-height: 2rem;
 }
 
 .leading-9 {
@@ -768,12 +784,12 @@ img {
   margin-left: 0.25rem;
 }
 
-.mt-3 {
-  margin-top: 0.75rem;
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
-.ml-3 {
-  margin-left: 0.75rem;
+.mt-3 {
+  margin-top: 0.75rem;
 }
 
 .mt-4 {
@@ -830,10 +846,6 @@ img {
 
 .max-w-2xl {
   max-width: 42rem;
-}
-
-.max-w-screen-sm {
-  max-width: 640px;
 }
 
 .max-w-screen-lg {
@@ -899,6 +911,11 @@ img {
   padding-right: 1.5rem;
 }
 
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
@@ -920,6 +937,10 @@ img {
 
 .pt-6 {
   padding-top: 1.5rem;
+}
+
+.pb-6 {
+  padding-bottom: 1.5rem;
 }
 
 .pt-8 {
@@ -1034,8 +1055,16 @@ img {
   color: #374151;
 }
 
+.text-gray-800 {
+  color: #252f3f;
+}
+
 .text-gray-900 {
   color: #161e2e;
+}
+
+.text-blue-600 {
+  color: #1c64f2;
 }
 
 .text-blue-700 {
@@ -1116,6 +1145,10 @@ img {
 
 .w-6 {
   width: 1.5rem;
+}
+
+.w-32 {
+  width: 8rem;
 }
 
 .w-1\/2 {
@@ -1242,6 +1275,10 @@ img {
     font-size: 1.125rem;
   }
 
+  .sm\:text-3xl {
+    font-size: 1.875rem;
+  }
+
   .sm\:text-4xl {
     font-size: 2.25rem;
   }
@@ -1355,6 +1392,10 @@ img {
 
   .md\:text-xl {
     font-size: 1.25rem;
+  }
+
+  .md\:text-3xl {
+    font-size: 1.875rem;
   }
 
   .md\:text-6xl {

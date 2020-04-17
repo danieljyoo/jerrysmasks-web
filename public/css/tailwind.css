@@ -255,7 +255,6 @@ button:-moz-focusring,
 
 h2,
 h3,
-h4,
 hr,
 p {
   margin: 0;
@@ -275,13 +274,6 @@ button {
 button:focus {
   outline: 1px dotted;
   outline: 5px auto -webkit-focus-ring-color;
-}
-
-
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 /**
@@ -381,14 +373,9 @@ button {
   cursor: pointer;
 }
 
-table {
-  border-collapse: collapse;
-}
-
 
 h2,
-h3,
-h4 {
+h3 {
   font-size: inherit;
   font-weight: inherit;
 }
@@ -434,8 +421,7 @@ select {
  * https://github.com/mozdevs/cssremedy/issues/14
  */
 
-img,
-svg {
+img {
   display: block;
   vertical-align: middle;
 }
@@ -544,38 +530,12 @@ img {
   border-color: #a4cafe;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-.appearance-none {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-}
-
 .bg-white {
   background-color: #ffffff;
 }
 
-.bg-gray-50 {
-  background-color: #f9fafb;
-}
-
 .bg-gray-100 {
   background-color: #f4f5f7;
-}
-
-.bg-gray-800 {
-  background-color: #252f3f;
 }
 
 .bg-blue-50 {
@@ -586,24 +546,12 @@ img {
   background-color: #e1effe;
 }
 
-.bg-indigo-500 {
-  background-color: #6875f5;
-}
-
 .bg-indigo-600 {
   background-color: #5850ec;
 }
 
-.hover\:bg-indigo-400:hover {
-  background-color: #8da2fb;
-}
-
 .hover\:bg-indigo-500:hover {
   background-color: #6875f5;
-}
-
-.focus\:bg-indigo-400:focus {
-  background-color: #8da2fb;
 }
 
 .active\:bg-indigo-700:active {
@@ -620,10 +568,6 @@ img {
 
 .border-gray-300 {
   border-color: #d2d6dc;
-}
-
-.border-gray-700 {
-  border-color: #374151;
 }
 
 .focus\:border-indigo-700:focus {
@@ -650,14 +594,6 @@ img {
   border-width: 1px;
 }
 
-.border-t {
-  border-top-width: 1px;
-}
-
-.border-b {
-  border-bottom-width: 1px;
-}
-
 .block {
   display: block;
 }
@@ -678,16 +614,8 @@ img {
   display: grid;
 }
 
-.table {
-  display: table;
-}
-
 .hidden {
   display: none;
-}
-
-.flex-col {
-  flex-direction: column;
 }
 
 .items-center {
@@ -696,10 +624,6 @@ img {
 
 .justify-center {
   justify-content: center;
-}
-
-.justify-between {
-  justify-content: space-between;
 }
 
 .font-normal {
@@ -722,20 +646,12 @@ img {
   font-weight: 800;
 }
 
-.h-6 {
-  height: 1.5rem;
-}
-
 .h-12 {
   height: 3rem;
 }
 
 .h-72 {
   height: 18rem;
-}
-
-.leading-4 {
-  line-height: 1rem;
 }
 
 .leading-5 {
@@ -761,11 +677,6 @@ img {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
-}
-
-.-my-2 {
-  margin-top: -0.5rem;
-  margin-bottom: -0.5rem;
 }
 
 .mt-1 {
@@ -808,10 +719,6 @@ img {
   margin-bottom: 1.5rem;
 }
 
-.ml-6 {
-  margin-left: 1.5rem;
-}
-
 .mt-8 {
   margin-top: 2rem;
 }
@@ -822,10 +729,6 @@ img {
 
 .mt-10 {
   margin-top: 2.5rem;
-}
-
-.ml-10 {
-  margin-left: 2.5rem;
 }
 
 .mt-12 {
@@ -852,16 +755,8 @@ img {
   max-width: 42rem;
 }
 
-.max-w-screen-lg {
-  max-width: 1024px;
-}
-
 .max-w-screen-xl {
   max-width: 1280px;
-}
-
-.min-w-full {
-  min-width: 100%;
 }
 
 .focus\:outline-none:focus {
@@ -872,17 +767,8 @@ img {
   overflow: hidden;
 }
 
-.overflow-x-auto {
-  overflow-x: auto;
-}
-
 .p-4 {
   padding: 1rem;
-}
-
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 }
 
 .py-3 {
@@ -890,24 +776,9 @@ img {
   padding-bottom: 0.75rem;
 }
 
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-.px-5 {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
 }
 
 .px-6 {
@@ -967,46 +838,6 @@ img {
   padding-bottom: 3rem;
 }
 
-.placeholder-gray-500::-webkit-input-placeholder {
-  color: #6b7280;
-}
-
-.placeholder-gray-500::-moz-placeholder {
-  color: #6b7280;
-}
-
-.placeholder-gray-500:-ms-input-placeholder {
-  color: #6b7280;
-}
-
-.placeholder-gray-500::-ms-input-placeholder {
-  color: #6b7280;
-}
-
-.placeholder-gray-500::placeholder {
-  color: #6b7280;
-}
-
-.focus\:placeholder-gray-400:focus::-webkit-input-placeholder {
-  color: #9fa6b2;
-}
-
-.focus\:placeholder-gray-400:focus::-moz-placeholder {
-  color: #9fa6b2;
-}
-
-.focus\:placeholder-gray-400:focus:-ms-input-placeholder {
-  color: #9fa6b2;
-}
-
-.focus\:placeholder-gray-400:focus::-ms-input-placeholder {
-  color: #9fa6b2;
-}
-
-.focus\:placeholder-gray-400:focus::placeholder {
-  color: #9fa6b2;
-}
-
 .relative {
   position: relative;
 }
@@ -1035,16 +866,8 @@ img {
   text-align: center;
 }
 
-.text-right {
-  text-align: right;
-}
-
 .text-white {
   color: #ffffff;
-}
-
-.text-gray-300 {
-  color: #d2d6dc;
 }
 
 .text-gray-400 {
@@ -1079,24 +902,8 @@ img {
   color: #5850ec;
 }
 
-.hover\:text-white:hover {
-  color: #ffffff;
-}
-
-.hover\:text-gray-300:hover {
-  color: #d2d6dc;
-}
-
-.hover\:text-gray-900:hover {
-  color: #161e2e;
-}
-
 .hover\:text-indigo-500:hover {
   color: #6875f5;
-}
-
-.focus\:text-gray-900:focus {
-  color: #161e2e;
 }
 
 .text-xs {
@@ -1127,28 +934,8 @@ img {
   font-size: 2.25rem;
 }
 
-.uppercase {
-  text-transform: uppercase;
-}
-
 .tracking-tight {
   letter-spacing: -0.025em;
-}
-
-.tracking-wider {
-  letter-spacing: 0.05em;
-}
-
-.align-middle {
-  vertical-align: middle;
-}
-
-.whitespace-no-wrap {
-  white-space: nowrap;
-}
-
-.w-6 {
-  width: 1.5rem;
 }
 
 .w-1\/2 {
@@ -1167,11 +954,6 @@ img {
   width: 100%;
 }
 
-.gap-8 {
-  grid-gap: 2rem;
-  gap: 2rem;
-}
-
 .col-gap-4 {
   grid-column-gap: 1rem;
   -moz-column-gap: 1rem;
@@ -1185,10 +967,6 @@ img {
 
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .transition {
@@ -1205,24 +983,12 @@ img {
 
 @media (min-width: 640px) {
 
-  .sm\:rounded-lg {
-    border-radius: 0.5rem;
-  }
-
   .sm\:flex {
     display: flex;
   }
 
   .sm\:justify-center {
     justify-content: center;
-  }
-
-  .sm\:flex-shrink-0 {
-    flex-shrink: 0;
-  }
-
-  .sm\:h-10 {
-    height: 2.5rem;
   }
 
   .sm\:leading-5 {
@@ -1237,11 +1003,6 @@ img {
     line-height: 1;
   }
 
-  .sm\:-mx-6 {
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
-  }
-
   .sm\:mt-0 {
     margin-top: 0;
   }
@@ -1252,10 +1013,6 @@ img {
 
   .sm\:mt-12 {
     margin-top: 3rem;
-  }
-
-  .sm\:max-w-md {
-    max-width: 28rem;
   }
 
   .sm\:px-6 {
@@ -1287,22 +1044,8 @@ img {
     font-size: 3rem;
   }
 
-  .sm\:col-gap-8 {
-    grid-column-gap: 2rem;
-    -moz-column-gap: 2rem;
-         column-gap: 2rem;
-  }
-
-  .sm\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .sm\:grid-cols-6 {
     grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .sm\:col-span-2 {
-    grid-column: span 2 / span 2;
   }
 
   .sm\:col-span-3 {
@@ -1320,24 +1063,12 @@ img {
 
 @media (min-width: 768px) {
 
-  .md\:block {
-    display: block;
-  }
-
   .md\:flex {
     display: flex;
   }
 
-  .md\:grid {
-    display: grid;
-  }
-
   .md\:items-center {
     align-items: center;
-  }
-
-  .md\:justify-center {
-    justify-content: center;
   }
 
   .md\:justify-between {
@@ -1346,10 +1077,6 @@ img {
 
   .md\:order-1 {
     order: 1;
-  }
-
-  .md\:order-2 {
-    order: 2;
   }
 
   .md\:mt-0 {
@@ -1401,23 +1128,9 @@ img {
   .md\:text-6xl {
     font-size: 4rem;
   }
-
-  .md\:gap-8 {
-    grid-gap: 2rem;
-    gap: 2rem;
-  }
-
-  .md\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (min-width: 1024px) {
-
-  .lg\:-mx-8 {
-    margin-left: -2rem;
-    margin-right: -2rem;
-  }
 
   .lg\:mt-20 {
     margin-top: 5rem;
@@ -1426,11 +1139,6 @@ img {
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
-  }
-
-  .lg\:py-16 {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
   }
 
   .lg\:py-24 {
@@ -1445,32 +1153,11 @@ img {
 
 @media (min-width: 1280px) {
 
-  .xl\:grid {
-    display: grid;
-  }
-
-  .xl\:mt-0 {
-    margin-top: 0;
-  }
-
   .xl\:mt-28 {
     margin-top: 7rem;
   }
 
   .xl\:pb-32 {
     padding-bottom: 8rem;
-  }
-
-  .xl\:gap-8 {
-    grid-gap: 2rem;
-    gap: 2rem;
-  }
-
-  .xl\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .xl\:col-span-2 {
-    grid-column: span 2 / span 2;
   }
 }

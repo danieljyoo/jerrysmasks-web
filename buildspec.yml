@@ -24,8 +24,8 @@ phases:
       - echo Build CODEBUILD_START_TIME $CODEBUILD_START_TIME
       - npm run build
       - cp $CODEBUILD_SRC_DIR/env/env.$FRONTEND_ENV.js $CODEBUILD_SRC_DIR/public/js/env.js
-      - sed -i '' "s/{VERSION}/$CODEBUILD_START_TIME/g" ./public/*.html
-      - sed -i '' "s/{VERSION}/$CODEBUILD_START_TIME/g" ./public/order/*.html
+      - sed -i "s/{VERSION}/$CODEBUILD_START_TIME/g" ./public/*.html
+      - sed -i "s/{VERSION}/$CODEBUILD_START_TIME/g" ./public/order/*.html
   post_build:
     commands:
       - aws s3 cp $CODEBUILD_SRC_DIR/public/ s3://$S3_BUCKET/ --acl public-read --recursive --cache-control 'max-age=31104000'

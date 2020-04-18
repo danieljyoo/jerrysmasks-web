@@ -42,19 +42,24 @@
   
   <!-- HERO END -->
 
-  <!-- PURISM KN95 -->
+  <!-- KN95 -->
   <div class="bg-white py-8 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
-  
     <div class="relative max-w-xl mx-auto">
       <div class="text-center">
         <h2 class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
           SUNJOY K1 Anti-Virus Mask (KN95)
         </h2>
-        <p class="mt-4 text-lg leading-6 text-gray-500">
+        <p class="mt-4 text-lg leading-6 text-gray-900">
           <span class="font-extrabold">$50.00</span> for a box of 20 masks
         </p>
         <p class="text-sm leading-6 text-gray-500">
           ($2.50 per mask)
+        </p>
+        <p class="mt-4 text-md leading-6 text-gray-900">
+          <span class="font-extrabold">Free shipping</span> for orders of 60 masks (or more)
+        </p>
+        <p class="text-xs leading-6 text-gray-500">
+          (Arrives in 7-10 days)
         </p>
       </div>
       <div class="relative max-w-xl mx-auto">
@@ -91,41 +96,18 @@
           </div>
         </div>
       </div>
-      <div class="mt-12 hidden">
-        <h3 class="text-2xl font-extrabold">About the Manufacturer</h3>
-        <p class="mt-4 text-md leading-6 text-gray-500">
-          Daddy’s Choice was established in Beijing in early 2015. In order to ensure the safety and quality of products from the source, they have carefully selected the industry's top raw material suppliers for long-term cooperation and signed an honest supplier agreement with more than 20 suppliers including 3M.
-        </p>
-        <div class="relative max-w-xl mx-auto">
-          <img class="mt-6 mb-1" src="/img/daddyschoice-factory.png">
-        </div>
-        <div class="flex mb-4">
-          <div class="w-2/3 pr-1">
-            <img class="" src="/img/daddychoice-factory-1.jpeg">
-          </div>
-          <div class="w-1/3">
-            <img class="h-72" src="/img/daddychoice-factory-2.jpeg">
-          </div>
-        </div>
-      </div>
-      <div class="mt-12 hidden">
-        <h3 class="text-2xl font-extrabold">Delivery Times</h3>
-        <p class="mt-4 text-md leading-6 text-gray-500">
-          $XYZ and arrives in 7-10 days for orders less than 10,000 masks.
-        </p>
-      </div>
       <div class="mt-12 bg-blue-100 rounded-lg pr-8 pt-8 pl-8 pb-8">
         <div class="text-center">
           <h2 class="text-3xl mb-6 leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
             Order
           </h2>
         </div>
-        <form x-data="{ data: { quantity: 1, units: 20, cost: 50, shipping: 'Domestic', product: 'purism-kn95' }, submit: submitOrder }">
+        <form x-data="{ data: { quantity: 1, units: 20, cost: 50, shipping: 'standard', product: 'sunjoy-kn95-20' }, ui: { loading: false }, submit: submitOrder }">
           <div>
             <h3 class="text-lg leading-6 font-medium text-gray-900">
               SUNJOY K1 Anti-Virus Mask (KN95) 
             </h3>
-            <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+            <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-900">
               <span class="font-bold">$50.00</span> for a box of 20 masks ($2.50 per mask)
             </p>
           </div>
@@ -135,9 +117,9 @@
                 Number of boxes (20 masks)
               </label>
               <div class="mt-1 rounded-md shadow-sm w-1/2">
-                <input x-model="data.quantity" id="quantity" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                <input x-model="data.quantity" id="quantity" type="number" min=1 max=100 x-on:change="updateShipping(data)" required class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
               </div>
-              <div class="text-xs mt-1 ml-1 text-gray-400">
+              <div class="text-xs mt-1 ml-1 text-gray-500">
                 <span class="font-bold">$<span x-text="data.quantity * data.cost"></span>.00</span> for <span x-text="data.quantity * data.units"></span> masks
               </div>
             </div>
@@ -145,23 +127,21 @@
               <label for="shipping" class="block text-sm font-medium leading-5 text-gray-700">
                 Shipping Cost and Time
               </label>
-              <div class="mt-1 rounded-md shadow-sm hidden">
-                <select x-model="data.shipping" id="shipping" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                  <option value="Domestic">3-5 days (Domestic)</option>
-                  <option value="International">14-21 days (International)</option>
-                </select>
+              <div class="text-xs mt-1 ml-1 text-gray-500" x-show="data.shipping == 'standard'">
+                <span class="font-bold">$15.00</span></span> and delivered in 7-10 days
               </div>
-              <div class="text-xs mt-1 ml-1 text-gray-400">
-                <span class="font-bold">$<span x-text="calcShippingCost(data.quantity, data.shipping)"></span>.00</span> (delivered in <span x-text="calcShippingTime(data.quantity, data.shipping)"></span> days) 
+              <div class="text-xs mt-1 ml-1 text-gray-500" x-show="data.shipping == 'standard-free'">
+                <span class="font-bold">FREE</span></span> and delivered in 7-10 days
               </div>
             </div>
             <div class="sm:col-span-4">
-                Total Cost: <span class="font-bold">$<span x-text="data.quantity * data.cost + calcShippingCost(data.quantity, data.shipping)"></span>.00</span> (<span x-text="data.quantity * data.units"></span> masks)
+                Total Cost: <span class="font-bold">$<span x-text="calcTotalCost(data)"></span>.00</span> (<span x-text="data.quantity * data.units"></span> masks)
             </div>
             <div class="sm:col-span-6">
               <span class="w-full inline-flex rounded-md shadow-sm">
-                <button x-on:click="submit(data)" type="button" class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
-                  Purchase
+                <button x-on:click="submitOrder(data, ui)" type="button" x-bind:disabled="ui.loading" x-bind:class="getButtonClasses(ui)">
+                  <span x-show="ui.loading">Loading ...</span>
+                  <span x-show="!ui.loading">Purchase</span>
                 </button>
               </span>
             </div>
@@ -250,28 +230,55 @@
   <!-- FOOTER END -->
   <script type="text/javascript">
     var stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-
-    function calcShippingCost(quantity, shipping) {
-      switch(shipping) {
-        case "Domestic":
-          return 15
-        case "International":
-          return 300
+    var buttonClasses = {
+      
+    }
+    function getButtonClasses(ui) {
+      return {
+        "opacity-50": ui.loading,
+        "cursor-not-allowed": ui.loading,
+        "w-full": true,
+        "inline-flex": true,
+        "items-center": true,
+        "justify-center": true,
+        "px-6": true,
+        "py-3": true,
+        "border": true,
+        "border-transparent": true,
+        "text-base": true,
+        "leading-6": true,
+        "font-medium": true,
+        "rounded-md": true,
+        "text-white": true,
+        "bg-indigo-600": true,
+        "hover:bg-indigo-500": true,
+        "focus:outline-none": true,
+        "focus:border-indigo-700": true,
+        "focus:shadow-outline-indigo": true,
+        "active:bg-indigo-700": true,
+        "transition ease-in-out duration-150": true
       }
     }
 
-    function calcShippingTime(quantity, shipping) {
-      switch(shipping) {
-        case "Domestic":
-          return "7-10"
-        case "International":
-          return "14-21"
-      }
+    function calcTotalCost(data) {
+      let quantity = parseInt(data.quantity)
+      let shipping = (quantity < 3) && 15 || 0
+      return quantity * data.cost + shipping
     }
   
-    function submitOrder(form) {
-      console.log(form);
-      axios.post(BASE_URL + '/stripe/checkout', form)
+    function updateShipping(data) {
+      let quantity = parseInt(data.quantity)
+      data.shipping = (quantity < 3) && 'standard' || 'standard-free'
+    }
+
+    function submitOrder(data, ui) {
+      ui.loading = true
+      console.log(data);
+      axios.post(BASE_URL + '/stripe/checkout', {
+        product: data.product,
+        quantity: parseInt(data.quantity),
+        shipping: data.shipping
+      })
       .then((response) => {
         // https://stripe.com/docs/payments/checkout/one-time
         console.log(response.data)
@@ -288,6 +295,7 @@
       .catch((err) => {
         console.log(err);
         alert(err.message);
+        ui.loading = false
       }) 
     }
     </script>

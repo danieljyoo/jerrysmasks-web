@@ -631,6 +631,10 @@ img {
   margin-left: 0.25rem;
 }
 
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -882,8 +886,8 @@ img {
   font-size: 2.25rem;
 }
 
-.text-6xl {
-  font-size: 4rem;
+.italic {
+  font-style: italic;
 }
 
 .tracking-tight {
@@ -1004,10 +1008,6 @@ img {
     font-size: 3rem;
   }
 
-  .sm\:text-6xl {
-    font-size: 4rem;
-  }
-
   .sm\:grid-cols-6 {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
@@ -1095,6 +1095,10 @@ img {
 
   .md\:text-3xl {
     font-size: 1.875rem;
+  }
+
+  .md\:text-4xl {
+    font-size: 2.25rem;
   }
 
   .md\:text-6xl {

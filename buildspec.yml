@@ -34,5 +34,5 @@ phases:
       - aws s3 cp $CODEBUILD_SRC_DIR/public/img/ s3://$S3_BUCKET/img/ --acl public-read --recursive --cache-control 'max-age=31104000'
       - aws s3 cp $CODEBUILD_SRC_DIR/public/order/ s3://$S3_BUCKET/order/ --acl public-read --recursive --cache-control max-age=0,no-cache,no-store,must-revalidate
       - aws s3 cp $CODEBUILD_SRC_DIR/public/donate/ s3://$S3_BUCKET/donate/ --acl public-read --recursive --cache-control max-age=0,no-cache,no-store,must-revalidate
-       - aws s3 cp $CODEBUILD_SRC_DIR/public/index.html s3://$S3_BUCKET/index.html --acl public-read --recursive --cache-control max-age=0,no-cache,no-store,must-revalidate
+      - aws s3 cp $CODEBUILD_SRC_DIR/public/index.html s3://$S3_BUCKET/index.html --acl public-read --recursive --cache-control max-age=0,no-cache,no-store,must-revalidate
       - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*" 

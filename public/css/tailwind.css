@@ -261,6 +261,7 @@ template {
 
 h2,
 h3,
+h4,
 hr,
 p {
   margin: 0;
@@ -392,7 +393,8 @@ table {
 
 
 h2,
-h3 {
+h3,
+h4 {
   font-size: inherit;
   font-weight: inherit;
 }
@@ -690,6 +692,10 @@ img {
   order: 3;
 }
 
+.font-light {
+  font-weight: 300;
+}
+
 .font-normal {
   font-weight: 400;
 }
@@ -716,6 +722,10 @@ img {
 
 .h-12 {
   height: 3rem;
+}
+
+.leading-3 {
+  line-height: .75rem;
 }
 
 .leading-5 {
@@ -1036,6 +1046,10 @@ img {
   box-shadow: 0 0 0 3px rgba(164, 202, 254, 0.45);
 }
 
+.focus\:shadow-outline-red:focus {
+  box-shadow: 0 0 0 3px rgba(248, 180, 180, 0.45);
+}
+
 .focus\:shadow-outline-indigo:focus {
   box-shadow: 0 0 0 3px rgba(180, 198, 252, 0.45);
 }
@@ -1116,8 +1130,16 @@ img {
   color: #f05252;
 }
 
+.hover\:text-red-600:hover {
+  color: #e02424;
+}
+
 .hover\:text-indigo-500:hover {
   color: #6875f5;
+}
+
+.hover\:text-indigo-600:hover {
+  color: #5850ec;
 }
 
 .focus\:text-gray-500:focus {

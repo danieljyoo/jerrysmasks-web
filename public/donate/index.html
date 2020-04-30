@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="/css/tailwind.css?v={VERSION}">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.0.1/dist/alpine.js" defer=""></script>
+    <script type="module" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.1/dist/alpine.min.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.1/dist/alpine-ie11.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/env.js?v={VERSION}"></script>
   </head>
@@ -36,7 +37,7 @@
           <div class="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
             <div class="rounded-md shadow-sm">
               <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKDzy_Fm8AXjioc9F9gXVHCIEM7mMBI2bXZHwccxMO1fX9AA/viewform" class="flex items-center justify-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-red-600 bg-white hover:text-indigo-500 focus:outline-none focus:shadow-outline transition ease-in-out duration-150">
-                Request Masks
+                Request masks
               </a>
             </div>
           </div>
@@ -51,6 +52,20 @@
       </div>
     </div>
     <!-- /Header banner -->
+    <!-- Nav -->
+    <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
+      <div class="mt-3 sm:mt-0 sm:ml-3">
+        <a href="/" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-light rounded-md text-gray-400 bg-white hover:text-indigo-600 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
+          Home
+        </a>
+      </div>
+      <div class="mt-3 sm:mt-0 sm:ml-3">
+        <a href="/donate/" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-bold rounded-md text-red-600 bg-white hover:text-red-500 focus:outline-none focus:shadow-outline-red transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
+          Donate
+        </a>
+      </div>
+    </div>
+    <!-- /Nav -->
     <!-- HERO -->
     <div class="relative pt-6 pb-6 sm:pb-16 md:pb-20 lg:pb-28 xl:pb-32">
       <div class="mt-10 mx-auto max-w-2xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 xl:mt-28">
@@ -169,12 +184,12 @@
               Ensure that you've entered the correct name and address of the donee for the shipping address before making payment.
             </p>
             <p class="mt-3">
-              In addition to your own personal <a href="/donate/samples/receipt.html" class="text-blue-500 underline">receipt</a> and <a href="/donate/samples/shipping.html" class="text-blue-500 underline">shipping notification</a>, 
-              you will receive special <a href="/donate/samples/receipt-donation.html" class="text-blue-500 underline">donation receipt</a> and <a href="/donate/samples/shipping-donation.html" class="text-blue-500 underline">donation shipping confirmation</a> emails. 
-              You can choose to forward these emails to the donee so that they have a written record of your donation and can track their shipment on their own. 
+              In addition to your own private <a href="/donate/samples/receipt.html" class="text-blue-500 underline">receipt</a> and <a href="/donate/samples/shipping.html" class="text-blue-500 underline">shipping notification</a>, 
+              you will receive a shareable <a href="/donate/samples/receipt-donation.html" class="text-blue-500 underline">receipt</a> and <a href="/donate/samples/shipping-donation.html" class="text-blue-500 underline">shipping confirmation</a>. 
+              You can choose to forward these emails to the organization you are donating to so that they have a written record of your purchase and can track their shipment on their own. 
             </p>
             <p class="mt-3">
-              We do not initiate any communication with your donee nor do we use their contact information for any purpose except to ship the order. 
+              We do not initiate any communication with the organization you are supporting nor do we use their contact information for any purpose except to ship the order. 
             </p>
             <div class="hidden mt-6 sm:mt-6 md:mt-6 lg:mt-6 xl:mt-6 rounded-md bg-gray-100 p-4 text-left max-w-md">
               <p class="text-xs leading-5 text-gray-700 font-bold mb-2 text-left">
@@ -205,7 +220,7 @@
               Donate
             </h2>
           </div>
-          <form x-data="{ data: { quantity: 1, units: 20, cost: 50, shipping: 'standard', product: 'sunjoy-kn95-20', donation: true, }, ui: { loading: false }, submit: submitOrder }">
+          <form x-data="{ data: { quantity: 1, units: 20, cost: 50, shipping: 'standard', product: 'sunjoy-kn95-20', donation: true, success_path: 'donate/success.html', cancel_path: 'donate' }, ui: { loading: false }, submit: submitOrder }">
             <div>
               <h3 class="text-lg leading-6 font-medium text-gray-900">
                 SUNJOY K1 Anti-Virus Mask (KN95) 
@@ -435,6 +450,8 @@
         quantity: parseInt(data.quantity),
         shipping: data.shipping,
         donation: data.donation || false,
+        success_path: data.success_path,
+        cancel_path: data.cancel_path
       })
       .then((response) => {
         // https://stripe.com/docs/payments/checkout/one-time

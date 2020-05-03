@@ -169,7 +169,7 @@
             Order
           </h2>
         </div>
-        <form x-data="{ data: { quantity: 1, units: 20, cost: 50, shipping: 'standard', product: 'sunjoy-kn95-20', success_path: 'order/success.html', cancel_path: '' }, ui: { loading: false }, submit: submitOrder }">
+        <form x-data="formData()">
           <div>
             <h3 class="text-lg leading-6 font-medium text-gray-900">
               SUNJOY K1 Anti-Virus Mask (KN95) 
@@ -190,7 +190,7 @@
                 <span class="font-bold">$<span x-text="data.quantity * data.cost"></span>.00</span> for <span x-text="data.quantity * data.units"></span> masks
               </div>
             </div>
-            <div class="sm:col-span-3">
+            <div class="sm:col-span-4">
               <label for="shipping" class="block text-sm font-medium leading-5 text-gray-700">
                 Shipping Cost and Time
               </label>
@@ -204,17 +204,132 @@
               </div>
             </div>
             <div class="sm:col-span-4">
-                Total Cost: <span class="font-bold">$<span x-text="calcTotalCost(data)"></span>.00</span> (<span x-text="data.quantity * data.units"></span> masks)
+              Total Cost: <span class="font-bold">$<span x-text="calcTotalCost(data)"></span>.00</span> (<span x-text="data.quantity * data.units"></span> masks)
             </div>
+            <template x-if="isFlag('beta')">
+            <div class="sm:col-span-4">
+              <hr/>
+            </div>
+            <div class="sm:col-span-4">
+              Contact Information
+            </div>
+            <div class="sm:col-span-4">
+              <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
+                Your Email
+              </label>
+              <div class="mt-1 rounded-md shadow-sm">
+                <input x-model="data.customer.email" id="email" type="email" required class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+              </div>
+              <div class="text-xs mt-1 ml-1 text-gray-500">
+                You'll receive you receipt and shipping notifications
+              </div>
+            </div>
+            <div class="sm:col-span-4">
+              <label for="phone" class="block text-sm font-medium leading-5 text-gray-700">
+                Your Phone Number
+              </label>
+              <div class="mt-1 rounded-md shadow-sm">
+                <input x-model="data.customer.phone" id="phone" type="tel" required class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+              </div>
+              <div class="text-xs mt-1 ml-1 text-gray-500">
+                Contact you for shipping purposes
+              </div>
+            </div>
+            </template>
+            
             <div class="sm:col-span-6">
               <span class="w-full inline-flex rounded-md shadow-sm">
-                <button x-on:click="submitOrder(data, ui)" type="button" x-bind:disabled="ui.loading" x-bind:class="getButtonClasses(ui)">
+                <button x-on:click="submitOrder(data, ui, modal)" type="button" x-bind:disabled="ui.loading" x-bind:class="getButtonClasses(ui)">
                   <span x-show="ui.loading">Loading ...</span>
                   <span x-show="!ui.loading">Purchase</span>
                 </button>
               </span>
             </div>
           </div>
+          <!-- MODAL -->
+          <div class="fixed bottom-0 inset-x-0 px-4 pb-6 sm:inset-0 sm:p-0 sm:flex sm:items-center sm:justify-center" x-show="modal.active">
+            <!--
+              Background overlay, show/hide based on modal state.
+
+              Entering: "ease-out duration-300"
+                From: "opacity-0"
+                To: "opacity-100"
+              Leaving: "ease-in duration-200"
+                From: "opacity-100"
+                To: "opacity-0"
+            -->
+            <div 
+              x-show="modal.active"
+              class="fixed inset-0 transition-opacity"
+              x-transition:enter="ease-out duration-300"
+              x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100"
+              x-transition:leave="ease-in duration-200"
+              x-transition:leave-start="opacity-100"
+              x-transition:leave-end="opacity-0"
+            >
+              <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <!--
+              Modal panel, show/hide based on modal state.
+
+              Entering: "ease-out duration-300"
+                From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                To: "opacity-100 translate-y-0 sm:scale-100"
+              Leaving: "ease-in duration-200"
+                From: "opacity-100 translate-y-0 sm:scale-100"
+                To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            -->
+              <div 
+                x-show="modal.active"
+                x-on:click.away="modal.hideModal()"
+                class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full sm:p-6"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
+                  <button x-on:click="modal.hideModal()" type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                  </button>
+                </div>
+                <div>
+                  <div x-show="modal.mode == 'success'" class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                    <svg class="h-6 w-6 text-green-600" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <div  x-show="modal.mode == 'error'" class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                    <svg class="h-6 w-6 text-red-600" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:mt-5">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900" x-text="modal.title"></h3>
+                    <div class="mt-2">
+                      <p class="text-sm leading-5 text-gray-500" x-text="modal.message"></p>
+                      <p class="text-sm leading-5 text-gray-500" x-show="modal.mode == 'error'">
+                        Your card has not been charged. Please contact <span class="text-gray-800 font-semibold">support@jerrysmasks.com</span> if you would like assistance making your purchase.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="hidden mt-5 sm:mt-6">
+                  <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0">
+                    <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                      Close
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          <!-- /MODAL -->
         </form>
       </div>
       <div class="mt-20 mb-20">
@@ -339,9 +454,57 @@
 
   <script type="text/javascript">
     var stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-    var buttonClasses = {
-      
+    var queryparams = queryParamsToHash();
+
+    function isFlag(v) {
+      return queryparams['flag'] == v
     }
+
+    function formData() {
+      return { 
+        data: { 
+          customer: { 
+            shipping: { } 
+          }, 
+          quantity: 1, 
+          units: 20, 
+          cost: 50, 
+          shipping: 'standard', 
+          product: 'sunjoy-kn95-20', 
+          success_path: 'order/success.html', 
+          cancel_path: '' 
+        }, 
+        ui: { 
+          loading: false
+        }, 
+        modal: {
+          active: false,
+          mode: 'error',
+          title: 'Error',
+          message: 'An unknown error has occured',
+          showModal(options) {
+            Object.assign(this, options)
+            this.active = true
+          },
+          hideModal() {
+            this.active = false
+          }
+        },
+        submit: submitOrder,
+        isFlag: isFlag
+      }
+    }
+
+    function queryParamsToHash() {
+      let params = { }
+      let searchParams = new URLSearchParams(window.location.search.substring(1));
+      for(var pair of searchParams.entries()) {
+        params[pair[0]] = pair[1]   
+      }
+      console.log(params)
+      return params
+    }
+
     function getButtonClasses(ui) {
       return {
         "opacity-50": ui.loading,
@@ -380,7 +543,7 @@
       data.shipping = (quantity < 3) && 'standard' || 'standard-free'
     }
 
-    function submitOrder(data, ui) {
+    function submitOrder(data, ui, modal) {
       ui.loading = true
       console.log(data);
       axios.post(BASE_URL + '/stripe/checkout', {
@@ -388,7 +551,8 @@
         quantity: parseInt(data.quantity),
         shipping: data.shipping,
         success_path: data.success_path,
-        cancel_path: data.cancel_path
+        cancel_path: data.cancel_path,
+        customer: data.customer
       })
       .then((response) => {
         // https://stripe.com/docs/payments/checkout/one-time
@@ -405,10 +569,10 @@
       })
       .catch((err) => {
         console.log(err);
-        alert(err.message);
+        modal.showModal({ title: 'We encountered an error in your purchase', message: err.message });
         ui.loading = false
       }) 
     }
     </script>
-  </div></body>
+  </body>
 </html>

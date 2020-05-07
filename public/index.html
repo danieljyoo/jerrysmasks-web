@@ -240,7 +240,7 @@
                 Email
               </label>
               <div class="mt-1 rounded-md shadow-sm">
-                <input x-model="data.customer.email" id="email" type="email" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email }">
+                <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.customer.email" id="email" type="email" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email }">
               </div>
               <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.email" x-text="data.errors.email"></p>
               <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.email">
@@ -252,7 +252,7 @@
                 Email Confirmation
               </label>
               <div class="mt-1 rounded-md shadow-sm">
-                <input x-model="data.email_confirmation" id="email_confirmation" type="email" x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email_confirmation }">
+                <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.email_confirmation" id="email_confirmation" type="email" x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email_confirmation }">
               </div>
               <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.email_confirmation" x-text="data.errors.email_confirmation"></p>
               <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.email_confirmation">
@@ -264,7 +264,7 @@
                 Phone Number
               </label>
               <div class="mt-1 rounded-md shadow-sm">
-                <input x-model="data.customer.phone" id="phone" type="tel" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.phone }">
+                <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.customer.phone" id="phone" type="tel" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.phone }">
               </div>
               <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.phone" x-text="data.errors.phone"></p>
               <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.phone">
@@ -580,15 +580,25 @@
       data.shipping = (quantity < 3) && 'standard' || 'standard-free'
     }
 
+    function hasValidationErrors(data) {
+      for (let val of Object.values(data.errors)) {
+        if (val) return true
+      }
+      return false
+    }
+
     function validateForm(data) {
+      console.log('validateForm START', data.errors)
       const email_regex = /[^@]+@[^\.]+\..+/
       // Email
       if (!data.customer.email || !data.customer.email.trim()) {
         data.errors.email = "Please enter your email address"
       } else if (!data.customer.email.match(email_regex)) {
         data.errors.email = "Invalid email address"
+      } else if (data.customer.email != data.email_confirmation) {
+        data.errors.email = "Emails do not match."
       } else {
-        delete data.errors.email
+        data.errors.email = null
       }
       // Email Confirmation
       if (!data.email_confirmation || !data.email_confirmation.trim()) {
@@ -596,24 +606,24 @@
       } else if (!data.email_confirmation.match(email_regex)) {
         data.errors.email_confirmation = "Invalid email address"
       } else if (data.customer.email != data.email_confirmation) {
-        data.errors.email = "Emails do not match."
-      } else {
-        delete data.errors.email_confirmation
-      }
-      // Phone
-      if (!data.customer.phone) {
-        data.errors.phone = "Please enter your phone number."
-      } else if (data.customer.email != data.email_confirmation) {
         data.errors.email_confirmation = "Emails do not match."
       } else {
-        delete data.errors.phone
+        data.errors.email_confirmation = null
       }
-      return (Object.keys(data.errors).length == 0) 
+      // Phone
+      if (!data.customer.phone || !data.customer.phone.trim()) {
+        data.errors.phone = "Please enter your phone number."
+      } else {
+        data.errors.phone = null
+      }
+      console.log('validateForm END', data.errors)
+      return !hasValidationErrors(data)
     }
 
     function submitOrder(data, ui, modal) {
-      console.log(data);
-      if (!validateForm(data)) return
+      console.log(data.errors);
+      validateForm(data)
+      if (hasValidationErrors(data)) return
       ui.loading = true
       axios.post(BASE_URL + '/stripe/checkout', {
         product: data.product,

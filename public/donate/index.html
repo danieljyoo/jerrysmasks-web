@@ -243,7 +243,7 @@
               Donate
             </h2>
           </div>
-          <form x-data="{ data: { quantity: 1, units: 20, cost: 50, shipping: 'standard', product: 'sunjoy-kn95-20', donation: true, success_path: 'donate/success.html', cancel_path: 'donate' }, ui: { loading: false }, submit: submitOrder }">
+          <form x-data="{ data: { quantity: 1, units: 20, cost: 50, shipping: 'standard', product: 'sunjoy-kn95-20', donation: true, success_path: 'donate/success.html', cancel_path: 'donate', customer: { }, errors: { } }, ui: { loading: false }, submit: submitOrder }">
             <div>
               <h3 class="text-lg leading-6 font-medium text-gray-900">
                 SUNJOY K1 Anti-Virus Mask (KN95) 
@@ -281,10 +281,94 @@
                   Total Cost: <span class="font-bold">$<span x-text="calcTotalCost(data)"></span>.00</span> (<span x-text="data.quantity * data.units"></span> masks)
               </div>
               <div class="sm:col-span-6">
+                <hr/>
+              </div>
+              <div class="sm:col-span-6 font-semibold">
+                Your Contact Information
+              </div>
+              <div class="sm:col-span-4">
+                <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
+                  Email
+                </label>
+                <div class="mt-1 rounded-md shadow-sm">
+                  <input x-model="data.customer.email" id="email" type="email" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email }">
+                </div>
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.email" x-text="data.errors.email"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.email">
+                  Your receipt and tracking number will be sent here.
+                </p>
+              </div>
+              <div class="sm:col-span-4">
+                <label for="email_confirmation" class="block text-sm font-medium leading-5 text-gray-700">
+                  Email Confirmation
+                </label>
+                <div class="mt-1 rounded-md shadow-sm">
+                  <input x-model="data.email_confirmation" id="email_confirmation" type="email" x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email_confirmation }">
+                </div>
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.email_confirmation" x-text="data.errors.email_confirmation"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.email_confirmation">
+                  Please re-enter to ensure accuracy.
+                </p>
+              </div>
+              <div class="sm:col-span-6">
+                <hr/>
+              </div>
+              <div class="sm:col-span-6 font-semibold">
+                Receiving Organization
+              </div>
+              <div class="sm:col-span-4">
+                <label for="phone" class="block text-sm font-medium leading-5 text-gray-700">
+                  Name of Primary Contact
+                </label>
+                <div class="mt-1 rounded-md shadow-sm">
+                  <input x-model="data.customer.phone" id="phone" type="tel" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.phone }">
+                </div>
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.phone" x-text="data.errors.phone"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.phone">
+                  An individual in the organization.
+                </p>
+              </div>
+              <div class="sm:col-span-4">
+                <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
+                  Email of Primary Contact
+                </label>
+                <div class="mt-1 rounded-md shadow-sm">
+                  <input x-model="data.customer.email" id="email" type="email" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email }">
+                </div>
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.email" x-text="data.errors.email"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.email">
+                  Your receipt and tracking number will be sent here.
+                </p>
+              </div>
+              <div class="sm:col-span-4">
+                <label for="email_confirmation" class="block text-sm font-medium leading-5 text-gray-700">
+                  Email Confirmation
+                </label>
+                <div class="mt-1 rounded-md shadow-sm">
+                  <input x-model="data.email_confirmation" id="email_confirmation" type="email" x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email_confirmation }">
+                </div>
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.email_confirmation" x-text="data.errors.email_confirmation"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.email_confirmation">
+                  Please re-enter to ensure accuracy.
+                </p>
+              </div>
+              <div class="sm:col-span-4">
+                <label for="phone" class="block text-sm font-medium leading-5 text-gray-700">
+                  Phone Number of Primary Contact
+                </label>
+                <div class="mt-1 rounded-md shadow-sm">
+                  <input x-model="data.customer.phone" id="phone" type="tel" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.phone }">
+                </div>
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.phone" x-text="data.errors.phone"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.phone">
+                  Used for shipping purposes only.
+                </p>
+              </div>
+              <div class="sm:col-span-6">
                 <span class="w-full inline-flex rounded-md shadow-sm">
                   <button x-on:click="submitOrder(data, ui)" type="button" x-bind:disabled="ui.loading" x-bind:class="getButtonClasses(ui)">
                     <span x-show="ui.loading">Loading ...</span>
-                    <span x-show="!ui.loading">Donate</span>
+                    <span x-show="!ui.loading">Continue to Payment</span>
                   </button>
                 </span>
               </div>
@@ -465,9 +549,41 @@
       data.shipping = (quantity < 3) && 'standard' || 'standard-free'
     }
 
+    function validateForm(data) {
+      const email_regex = /[^@]+@[^\.]+\..+/
+      // Email
+      if (!data.customer.email || !data.customer.email.trim()) {
+        data.errors.email = "Please enter your email address"
+      } else if (!data.customer.email.match(email_regex)) {
+        data.errors.email = "Invalid email address"
+      } else {
+        delete data.errors.email
+      }
+      // Email Confirmation
+      if (!data.email_confirmation || !data.email_confirmation.trim()) {
+        data.errors.email_confirmation = "Please confirm your email address"
+      } else if (!data.email_confirmation.match(email_regex)) {
+        data.errors.email_confirmation = "Invalid email address"
+      } else if (data.customer.email != data.email_confirmation) {
+        data.errors.email = "Emails do not match."
+      } else {
+        delete data.errors.email_confirmation
+      }
+      // Phone
+      if (!data.customer.phone) {
+        data.errors.phone = "Please enter your phone number."
+      } else if (data.customer.email != data.email_confirmation) {
+        data.errors.email_confirmation = "Emails do not match."
+      } else {
+        delete data.errors.phone
+      }
+      return (Object.keys(data.errors).length == 0) 
+    }
+
     function submitOrder(data, ui) {
-      ui.loading = true
       console.log(data);
+      if (!validateForm(data)) return
+      ui.loading = true
       axios.post(BASE_URL + '/stripe/checkout', {
         product: data.product,
         quantity: parseInt(data.quantity),

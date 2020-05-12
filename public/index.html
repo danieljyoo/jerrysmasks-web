@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
-    <title>FDA Authorized KN95 Masks Available in Small Orders at Wholesale Prices</title>
+    <title>FDA Registered KN95 Masks Available in Small Orders at Wholesale Prices</title>
     <link rel="stylesheet" href="/css/tailwind.css?v={VERSION}">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <script src="https://js.stripe.com/v3/"></script>
@@ -95,7 +95,7 @@
       <div class="mt-10 mx-auto max-w-2xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 xl:mt-28">
         <div class="text-center">
           <h3 class="mt-3 mb-5 text-4xl tracking-tight leading-8 font-extrabold text-indigo-600 sm:text-2xl md:text-4xl">
-            FDA Authorized
+            FDA Registered
           </h3>
           <h2 class="text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:text-3xl sm:leading-none md:text-6xl">
             KN95 Masks
@@ -140,7 +140,7 @@
         <p class="mt-4 text-md leading-6 text-gray-900">
           <span class="font-extrabold">Free shipping</span> for orders of 60 masks (or more)
         </p>
-        <p class="text-xs leading-6 text-gray-500">
+        <p class="hidden text-xs leading-6 text-gray-500">
           (Arrives in 7-10 days)
         </p>
       </div>
@@ -164,18 +164,18 @@
         </div>
       </div>
       <div class="mt-12">
-        <h3 class="text-2xl font-extrabold">FDA Registered and Authorized</h3>
-        <p class="mt-4 text-md leading-6 text-gray-500">
+        <h3 class="text-2xl font-extrabold">FDA Registered Manufacturer</h3>
+        <p class="hidden mt-4 text-md leading-6 text-gray-500">
           The SUNJOY K1 mask is an official FDA authorized respirator and is listed in <a href="https://www.fda.gov/media/136663/download" class="text-blue-700">Appendix A: Authorized Respirators</a>.
           This means that the FDA has approved the <a href="https://www.fda.gov/media/136664/download" class="text-blue-600">emergency use</a> of this mask in healthcare settings.
         </p>
-        <div class="relative max-w-xl mx-auto">
+        <div class="hidden relative max-w-xl mx-auto">
           <img class="mt-6" src="/img/appendixa.jpg">
           <hr class="border-dashed border-gray-300 border-2">
           <img class="mb-6" src="/img/sunjoy/sunjoy-fda-appendixa.jpeg">
         </div>
         <p class="mt-4 text-md leading-6 text-gray-500">
-          This product and manufacturer is also actively registered with the FDA.
+          This product and manufacturer is actively registered with the FDA.
         </p>
         <div class="mt-4 flex mb-4">
           <div class="w-1/2 pr-1">
@@ -631,7 +631,7 @@
         shipping: data.shipping,
         success_path: data.success_path,
         cancel_path: data.cancel_path,
-        customer: data.customer
+        customer: data.customer,
       })
       .then((response) => {
         // https://stripe.com/docs/payments/checkout/one-time

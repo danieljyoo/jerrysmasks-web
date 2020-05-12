@@ -243,7 +243,7 @@
               Donate
             </h2>
           </div>
-          <form x-data="{ data: { quantity: 1, units: 20, cost: 50, shipping: 'standard', product: 'sunjoy-kn95-20', donation: true, success_path: 'donate/success.html', cancel_path: 'donate', customer: { }, errors: { } }, ui: { loading: false }, submit: submitOrder }">
+          <form x-data="{ data: { quantity: 1, units: 20, cost: 50, shipping: 'standard', product: 'sunjoy-kn95-20', donation: true, donation_info: { }, success_path: 'donate/success.html', cancel_path: 'donate', customer: { }, errors: { } }, ui: { loading: false }, submit: submitOrder }">
             <div>
               <h3 class="text-lg leading-6 font-medium text-gray-900">
                 SUNJOY K1 Anti-Virus Mask (KN95) 
@@ -284,14 +284,26 @@
                 <hr/>
               </div>
               <div class="sm:col-span-6 font-semibold">
-                Your Contact Information
+                Who is purchasing the masks?
+              </div>
+              <div class="sm:col-span-4">
+                <label for="name" class="block text-sm font-medium leading-5 text-gray-700">
+                  Name
+                </label>
+                <div class="mt-1 rounded-md shadow-sm">
+                  <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.customer.name" id="name" type="name" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.name }">
+                </div>
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.name" x-text="data.errors.name"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.name">
+                  Your name or the entity that is making the purchase.
+                </p>
               </div>
               <div class="sm:col-span-4">
                 <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
                   Email
                 </label>
                 <div class="mt-1 rounded-md shadow-sm">
-                  <input x-model="data.customer.email" id="email" type="email" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email }">
+                  <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.customer.email" id="email" type="email" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email }">
                 </div>
                 <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.email" x-text="data.errors.email"></p>
                 <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.email">
@@ -303,64 +315,100 @@
                   Email Confirmation
                 </label>
                 <div class="mt-1 rounded-md shadow-sm">
-                  <input x-model="data.email_confirmation" id="email_confirmation" type="email" x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email_confirmation }">
+                  <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.email_confirmation" id="email_confirmation" type="email" x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email_confirmation }">
                 </div>
                 <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.email_confirmation" x-text="data.errors.email_confirmation"></p>
                 <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.email_confirmation">
                   Please re-enter to ensure accuracy.
                 </p>
+              </div>
+              <div class="sm:col-span-4">
+                <label for="phone" class="block text-sm font-medium leading-5 text-gray-700">
+                  Phone Number
+                </label>
+                <div class="mt-1 rounded-md shadow-sm">
+                  <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.customer.phone" id="phone" type="tel" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.phone }">
+                </div>
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.phone" x-text="data.errors.phone"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.phone">
+                  Used for troubleshooting the order or shipping.
+                </p>
+              </div>
+              <div class="sm:col-span-4">
+                <div class="relative flex items-start">
+                  <div class="absolute flex items-center h-5">
+                    <input id="anonymous" type="checkbox" x-model="data.donation_info.anonymous" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" />
+                  </div>
+                  <div class="pl-7 text-sm leading-4 mt-1">
+                    <label for="anonymous" class="font-medium text-gray-700">Anonymous Donation</label>
+                    <p class="text-xs mt-2 text-gray-500">
+                      We will not share your name or contact information with the receiving organization.
+                    </p>
+                  </div>
+                </div>
               </div>
               <div class="sm:col-span-6">
                 <hr/>
               </div>
               <div class="sm:col-span-6 font-semibold">
-                Receiving Organization
+                Who will be receiving the masks?
               </div>
               <div class="sm:col-span-4">
                 <label for="phone" class="block text-sm font-medium leading-5 text-gray-700">
+                  Organization (OPTIONAL)
+                </label>
+                <div class="mt-1 rounded-md shadow-sm">
+                  <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.donation_info.organization" id="organization" type="text" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true }">
+                </div>
+                <p class="text-xs mt-1 ml-1 text-gray-500">
+                  The name of the organization that will be receiving the masks.
+                </p>
+              </div>
+              <div class="sm:col-span-4">
+                <label for="donation_name" class="block text-sm font-medium leading-5 text-gray-700">
                   Name of Primary Contact
                 </label>
                 <div class="mt-1 rounded-md shadow-sm">
-                  <input x-model="data.customer.phone" id="phone" type="tel" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.phone }">
+                  <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.donation_info.donation_name" id="donation_name" type="text" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.donation_name }">
                 </div>
-                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.phone" x-text="data.errors.phone"></p>
-                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.phone">
-                  An individual in the organization.
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.donation_name" x-text="data.errors.donation_name"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.donation_name">
+                  An individual in the organization who knows about your purchase.
                 </p>
               </div>
               <div class="sm:col-span-4">
-                <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
+                <label for="donation_email" class="block text-sm font-medium leading-5 text-gray-700">
                   Email of Primary Contact
                 </label>
                 <div class="mt-1 rounded-md shadow-sm">
-                  <input x-model="data.customer.email" id="email" type="email" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email }">
+                  <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.donation_info.donation_email" id="donation_email" type="email" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.donation_email }">
                 </div>
-                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.email" x-text="data.errors.email"></p>
-                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.email">
-                  Your receipt and tracking number will be sent here.
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.donation_email" x-text="data.errors.donation_email"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.donation_email">
+                  We will send purchase and shipping information to this address.
                 </p>
               </div>
               <div class="sm:col-span-4">
-                <label for="email_confirmation" class="block text-sm font-medium leading-5 text-gray-700">
+                <label for="donation_email_confirmation" class="block text-sm font-medium leading-5 text-gray-700">
                   Email Confirmation
                 </label>
                 <div class="mt-1 rounded-md shadow-sm">
-                  <input x-model="data.email_confirmation" id="email_confirmation" type="email" x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.email_confirmation }">
+                  <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.donation_info.donation_email_confirmation" id="donation_email_confirmation" type="email" x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.donation_email_confirmation }">
                 </div>
-                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.email_confirmation" x-text="data.errors.email_confirmation"></p>
-                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.email_confirmation">
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.donation_email_confirmation" x-text="data.errors.donation_email_confirmation"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.donation_email_confirmation">
                   Please re-enter to ensure accuracy.
                 </p>
               </div>
               <div class="sm:col-span-4">
-                <label for="phone" class="block text-sm font-medium leading-5 text-gray-700">
+                <label for="donation_phone" class="block text-sm font-medium leading-5 text-gray-700">
                   Phone Number of Primary Contact
                 </label>
                 <div class="mt-1 rounded-md shadow-sm">
-                  <input x-model="data.customer.phone" id="phone" type="tel" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.phone }">
+                  <input @blur="if (hasValidationErrors(data)) { validateForm(data) }" x-model="data.donation_info.donation_phone" id="donation_phone" type="tel" required x-bind:class="{ 'form-input':true, 'block':true, 'w-full':true, 'transition':true, 'duration-150':true, 'ease-in-out':true, 'sm:text-sm':true, 'sm:leading-5':true, 'border-red-500': data.errors.donation_phone }">
                 </div>
-                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.phone" x-text="data.errors.phone"></p>
-                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.phone">
+                <p class="text-xs mt-1 ml-1 text-red-500" x-show="data.errors.donation_phone" x-text="data.errors.donation_phone"></p>
+                <p class="text-xs mt-1 ml-1 text-gray-500" x-show="!data.errors.donation_phone">
                   Used for shipping purposes only.
                 </p>
               </div>
@@ -380,6 +428,8 @@
     </div>
   </div>
   <!-- /DONATION ORDER FORM -->
+
+  <!-- GET IN TOUCH -->
   <div class="bg-white py-4 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-2">
     <div class="relative max-w-xl mx-auto">
       
@@ -391,11 +441,10 @@
       </div>
     </div>
   </div>
-
+  <!-- /GET IN TOUCH -->
 
   <!-- ABOUT US -->
   <hr class="border-gray-200">
-
   <div class="bg-gray-100 py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
     <div class="relative max-w-xl mx-auto">
       <div class="text-left">
@@ -549,15 +598,30 @@
       data.shipping = (quantity < 3) && 'standard' || 'standard-free'
     }
 
+    function hasValidationErrors(data) {
+      for (let val of Object.values(data.errors)) {
+        if (val) return true
+      }
+      return false
+    }
+
     function validateForm(data) {
       const email_regex = /[^@]+@[^\.]+\..+/
+      // Name
+      if (!data.customer.name || !data.customer.name.trim()) {
+        data.errors.name = "Please enter a name."
+      } else {
+        data.errors.name = null
+      }
       // Email
       if (!data.customer.email || !data.customer.email.trim()) {
         data.errors.email = "Please enter your email address"
       } else if (!data.customer.email.match(email_regex)) {
         data.errors.email = "Invalid email address"
+      } else if (data.customer.email != data.email_confirmation) {
+        data.errors.email = "Emails do not match."
       } else {
-        delete data.errors.email
+        data.errors.email = null
       }
       // Email Confirmation
       if (!data.email_confirmation || !data.email_confirmation.trim()) {
@@ -565,32 +629,73 @@
       } else if (!data.email_confirmation.match(email_regex)) {
         data.errors.email_confirmation = "Invalid email address"
       } else if (data.customer.email != data.email_confirmation) {
-        data.errors.email = "Emails do not match."
-      } else {
-        delete data.errors.email_confirmation
-      }
-      // Phone
-      if (!data.customer.phone) {
-        data.errors.phone = "Please enter your phone number."
-      } else if (data.customer.email != data.email_confirmation) {
         data.errors.email_confirmation = "Emails do not match."
       } else {
-        delete data.errors.phone
+        data.errors.email_confirmation = null
       }
-      return (Object.keys(data.errors).length == 0) 
+      // Phone
+      if (!data.customer.phone || !data.customer.phone.trim()) {
+        data.errors.phone = "Please enter your phone number."
+      } else {
+        data.errors.phone = null
+      }
+      validateDonationForm(data)
+      return !hasValidationErrors(data)
+    }
+
+    function validateDonationForm(data) {
+      const email_regex = /[^@]+@[^\.]+\..+/
+      // Organization (OPTIONAL)
+      // Primary Contact: Name
+      if (!data.donation_info.donation_name || !data.donation_info.donation_name.trim()) {
+        data.errors.donation_name = "Please enter the name of the primary contact"
+      } else {        
+        data.errors.donation_name = null
+      }
+      // Primary Contact: Email
+      if (!data.donation_info.donation_email || !data.donation_info.donation_email.trim()) {
+        data.errors.donation_email = "Please enter the email address of the primary contact"
+      } else if (!data.donation_info.donation_email.match(email_regex)) {
+        data.errors.donation_email = "Invalid email address"
+      } else if (data.donation_info.donation_email != data.donation_info.donation_email_confirmation) {
+        data.errors.donation_email = "Emails do not match."
+      } else {
+        data.errors.donation_email = null
+      }
+      // Primary Contact: Email Confirmation
+      if (!data.donation_info.donation_email_confirmation || !data.donation_info.donation_email_confirmation.trim()) {
+        data.errors.donation_email_confirmation = "Please confirm the email address of the primary contact"
+      } else if (!data.donation_info.donation_email_confirmation.match(email_regex)) {
+        data.errors.donation_email_confirmation = "Invalid email address"
+      } else if (data.donation_info.donation_email != data.donation_info.donation_email_confirmation) {
+        data.errors.donation_email_confirmation = "Emails do not match."
+      } else {
+        data.errors.donation_email_confirmation = null
+      }
+
+      // Phone
+      if (!data.donation_info.donation_phone) {
+        data.errors.donation_phone = "Please enter the phone number of the primary contact"
+      } else {
+        data.errors.donation_phone = null
+      }
+      return !hasValidationErrors(data)
     }
 
     function submitOrder(data, ui) {
-      console.log(data);
-      if (!validateForm(data)) return
+      console.log(JSON.stringify(data.donation_info));
+      validateForm(data);
+      if (hasValidationErrors(data)) return
       ui.loading = true
       axios.post(BASE_URL + '/stripe/checkout', {
         product: data.product,
         quantity: parseInt(data.quantity),
         shipping: data.shipping,
-        donation: data.donation || false,
         success_path: data.success_path,
-        cancel_path: data.cancel_path
+        cancel_path: data.cancel_path,
+        customer: data.customer,
+        donation: data.donation || false,
+        donation_info: data.donation_info
       })
       .then((response) => {
         // https://stripe.com/docs/payments/checkout/one-time
